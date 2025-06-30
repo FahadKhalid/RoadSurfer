@@ -8,17 +8,15 @@ A Flutter application for discovering and exploring campsites across Europe. Bui
 
 ## 📱 Screenshots
 
-### Home Screen
-<img src="Screenshot_20250630_151703.png" alt="Home Screen" width="50%" />
+<div align="center">
+  <img src="Screenshot_20250630_151703.png" alt="Home Screen" width="45%" style="margin-right: 2%" />
+  <img src="Screenshot_20250630_151717.png" alt="Campsite Details" width="45%" />
+</div>
 
-### Campsite Details
-<img src="Screenshot_20250630_151717.png" alt="Campsite Details" width="50%" />
-
-### Map View
-<img src="Screenshot_20250630_151740.png" alt="Map View" width="50%" />
-
-### Filter Options
-<img src="Screenshot_20250630_151727.png" alt="Filter Options" width="50%" />
+<div align="center" style="margin-top: 16px;">
+  <img src="Screenshot_20250630_151740.png" alt="Map View" width="45%" style="margin-right: 2%" />
+  <img src="Screenshot_20250630_151727.png" alt="Filter Options" width="45%" />
+</div>
 
 ## Features
 
