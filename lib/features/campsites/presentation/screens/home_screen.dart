@@ -89,7 +89,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           final campsite = campsites[index];
                           return CampsiteCard(
                             campsite: campsite,
-                            onTap: () => context.push('${AppStrings.campsiteDetailRoute.replaceAll(':id', campsite.id)}'),
+                            onTap: () => context.push(AppStrings.campsiteDetailRoute.replaceAll(':id', campsite.id)),
                           );
                         },
                       );
