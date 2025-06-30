@@ -6,6 +6,20 @@ A Flutter application for discovering and exploring campsites across Europe. Bui
 
 **Visit the live app:** [https://fahadkhalid.github.io/RoadSurfer/](https://fahadkhalid.github.io/RoadSurfer/)
 
+## 📱 Screenshots
+
+### Home Screen
+![Home Screen](Screenshot_20250630_151703.png)
+
+### Campsite Details
+![Campsite Details](Screenshot_20250630_151717.png)
+
+### Map View
+![Map View](Screenshot_20250630_151740.png)
+
+### Filter Options
+![Filter Options](Screenshot_20250630_151727.png)
+
 ## Features
 
 ### 🏕️ Campsite Discovery
