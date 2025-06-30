@@ -1,4 +1,3 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../entities/campsite.dart';
 import '../entities/filter_criteria.dart';
 

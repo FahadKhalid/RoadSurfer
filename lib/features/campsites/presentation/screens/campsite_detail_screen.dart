@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../../../core/utils/price_formatter.dart';
 import '../../domain/entities/campsite.dart';
 import '../widgets/feature_chip.dart';
+import '../providers/campsites_provider.dart';
 
 class CampsiteDetailScreen extends ConsumerWidget {
   final String campsiteId;
