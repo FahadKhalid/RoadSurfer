@@ -21,13 +21,9 @@ class PriceFormatter {
     bool showPerNight = true,
   }) {
     final formattedPrice = _currencyFormatter.format(price);
-    final currencySymbol = currency ?? '\$';
-    
-    // Replace the default $ with custom currency if provided
     final priceWithCustomCurrency = currency != null 
         ? formattedPrice.replaceFirst('\$', currency)
         : formattedPrice;
-    
     return showPerNight ? '$priceWithCustomCurrency/night' : priceWithCustomCurrency;
   }
 
@@ -45,17 +41,12 @@ class PriceFormatter {
   }) {
     final minFormatted = _currencyFormatter.format(minPrice);
     final maxFormatted = _currencyFormatter.format(maxPrice);
-    
-    final currencySymbol = currency ?? '\$';
-    
-    // Replace the default $ with custom currency if provided
     final minWithCustomCurrency = currency != null 
         ? minFormatted.replaceFirst('\$', currency)
         : minFormatted;
     final maxWithCustomCurrency = currency != null 
         ? maxFormatted.replaceFirst('\$', currency)
         : maxFormatted;
-    
     return '$minWithCustomCurrency-$maxWithCustomCurrency/night';
   }
 

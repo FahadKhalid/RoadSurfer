@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_strings.dart';
 
 class SearchBarWidget extends StatefulWidget {
   final Function(String) onSearchChanged;
@@ -27,11 +28,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       margin: const EdgeInsets.all(16),
       child: TextField(
         controller: _controller,
-        onChanged: widget.onSearchChanged,
-        textDirection: TextDirection.ltr,
-        textAlign: TextAlign.start,
         decoration: InputDecoration(
-          hintText: 'Search campsites...',
+          hintText: AppStrings.searchHint,
           hintTextDirection: TextDirection.ltr,
           prefixIcon: const Icon(Icons.search),
           suffixIcon: _controller.text.isNotEmpty
@@ -44,9 +42,12 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                 )
               : null,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(12),
           ),
+          filled: true,
+          fillColor: Colors.grey[100],
         ),
+        onChanged: widget.onSearchChanged,
       ),
     );
   }

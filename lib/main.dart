@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'shared/theme/app_theme.dart';
+import 'core/constants/app_strings.dart';
 
 void main() {
   runApp(
@@ -19,11 +20,11 @@ class CampsiteApp extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: MaterialApp.router(
-        title: 'Roadsurfer Campsites',
+        title: AppStrings.appTitle,
         theme: AppTheme.lightTheme,
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
-        locale: const Locale('en', 'US'),
+        locale: Locale(AppStrings.defaultLocale, AppStrings.defaultCountry),
       ),
     );
   }

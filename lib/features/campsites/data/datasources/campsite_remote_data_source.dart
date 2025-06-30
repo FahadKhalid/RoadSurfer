@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../../core/constants/api_constants.dart';
+import '../../../../core/constants/app_strings.dart';
 import '../models/campsite_model.dart';
 
 abstract class CampsiteRemoteDataSource {
@@ -15,54 +16,29 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
   @override
   Future<List<CampsiteModel>> getCampsites() async {
     try {
-      print('Fetching campsites from: ${ApiConstants.campsitesUrl}');
       final response = await client.get(Uri.parse(ApiConstants.campsitesUrl));
-      
-      print('Response status: ${response.statusCode}');
-      print('Response body preview: ${response.body.substring(0, response.body.length > 300 ? 300 : response.body.length)}...');
-      
       if (response.statusCode == 200) {
         final List<dynamic> jsonList = json.decode(response.body);
-        print('Parsed ${jsonList.length} campsites from API');
-        
-        // Log the structure of the first campsite for debugging
-        if (jsonList.isNotEmpty) {
-          print('First campsite structure: ${jsonList.first.keys.toList()}');
-        }
-        
         final List<CampsiteModel> campsites = [];
-        int successCount = 0;
-        int errorCount = 0;
-        
         for (int i = 0; i < jsonList.length; i++) {
           try {
             final campsite = CampsiteModel.fromJson(jsonList[i]);
             campsites.add(campsite);
-            successCount++;
           } catch (e) {
-            errorCount++;
-            print('Error parsing campsite at index $i: $e');
-            print('Campsite data: ${jsonList[i]}');
-            
-            // Try to create a minimal campsite with available data
             try {
               final fallbackCampsite = _createFallbackCampsite(jsonList[i], i.toString());
               campsites.add(fallbackCampsite);
-              print('Created fallback campsite for index $i');
             } catch (fallbackError) {
-              print('Failed to create fallback campsite for index $i: $fallbackError');
+              // skip if fallback also fails
             }
           }
         }
-        
-        print('Successfully parsed $successCount campsites, $errorCount errors');
         return campsites;
       } else {
-        throw Exception('Failed to load campsites: ${response.statusCode} - ${response.body}');
+        throw Exception('${AppStrings.failedToLoadCampsites}: ${response.statusCode} - ${response.body}');
       }
     } catch (e) {
-      print('Error fetching campsites: $e');
-      throw Exception('Failed to load campsites: $e');
+      throw Exception('${AppStrings.failedToLoadCampsites}: $e');
     }
   }
 
@@ -73,7 +49,7 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
       label: json['label']?.toString() ?? 
              json['name']?.toString() ?? 
              json['title']?.toString() ?? 
-             'Campsite $fallbackId',
+             '${AppStrings.campsitePrefix} $fallbackId',
       geoLocation: GeoLocationModel(
         latitude: _extractDouble(json, ['lat', 'latitude']),
         longitude: _extractDouble(json, ['long', 'longitude', 'lng']),
@@ -86,7 +62,7 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
       photo: json['photo']?.toString() ?? 
              json['image']?.toString() ?? 
              json['picture']?.toString() ?? 
-             'https://via.placeholder.com/640/480?text=Campsite',
+             AppStrings.placeholderImageUrl,
     );
   }
 
@@ -111,8 +87,8 @@ class CampsiteRemoteDataSourceImpl implements CampsiteRemoteDataSource {
         if (value is bool) return value;
         if (value is String) {
           final lower = value.toLowerCase();
-          if (lower == 'true' || lower == '1') return true;
-          if (lower == 'false' || lower == '0') return false;
+          if (lower == AppStrings.trueValue || lower == AppStrings.oneValue) return true;
+          if (lower == AppStrings.falseValue || lower == AppStrings.zeroValue) return false;
         }
         if (value is num) return value != 0;
       }

@@ -5,6 +5,7 @@ import '../providers/campsites_provider.dart';
 import '../widgets/campsite_card.dart';
 import '../widgets/filter_bottom_sheet.dart';
 import '../widgets/search_bar_widget.dart';
+import '../../../../core/constants/app_strings.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -29,11 +30,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Campsites'),
+        title: Text(AppStrings.homeTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.map),
-            onPressed: () => context.push('/map'),
+            onPressed: () => context.push(AppStrings.mapRoute),
           ),
           IconButton(
             icon: const Icon(Icons.filter_list),
@@ -43,39 +44,45 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Column(
         children: [
-          SearchBarWidget(
-            onSearchChanged: (query) {
-              filterNotifier.updateSearchQuery(query);
-              _applyFilters();
-            },
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SearchBarWidget(
+              onSearchChanged: (query) {
+                filterNotifier.updateSearchQuery(query);
+                _applyFilters();
+              },
+            ),
           ),
           Expanded(
             child: campsitesAsync.when(
-              data: (campsites) => campsites.isEmpty
-                  ? const Center(
-                      child: Text('No campsites found'),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: () async {
-                        await ref
-                            .read(campsitesNotifierProvider.notifier)
-                            .refreshCampsites();
-                      },
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: campsites.length,
-                        itemBuilder: (context, index) {
-                          final campsite = campsites[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: CampsiteCard(
-                              campsite: campsite,
-                              onTap: () => context.push('/campsite/${campsite.id}'),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+              data: (campsites) {
+                if (campsites.isEmpty) {
+                  return Center(
+                    child: Text(AppStrings.noCampsitesFound),
+                  );
+                }
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    await ref
+                        .read(campsitesNotifierProvider.notifier)
+                        .refreshCampsites();
+                  },
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: campsites.length,
+                    itemBuilder: (context, index) {
+                      final campsite = campsites[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: CampsiteCard(
+                          campsite: campsite,
+                          onTap: () => context.push('${AppStrings.campsiteDetailRoute.replaceAll(':id', campsite.id)}'),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
               loading: () => const Center(
                 child: CircularProgressIndicator(),
               ),
@@ -90,7 +97,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Error loading campsites',
+                      AppStrings.errorLoadingCampsites,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 8),
@@ -106,7 +113,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             .read(campsitesNotifierProvider.notifier)
                             .refreshCampsites();
                       },
-                      child: const Text('Retry'),
+                      child: Text(AppStrings.retry),
                     ),
                   ],
                 ),

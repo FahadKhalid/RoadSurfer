@@ -92,45 +92,32 @@ class MapScreen extends ConsumerWidget {
       maxLng = max(maxLng, fixedLocation.longitude);
     }
 
-    // Center map on the middle of all campsites
     final centerLat = (minLat + maxLat) / 2;
     final centerLng = (minLng + maxLng) / 2;
-    
-    // Calculate appropriate zoom level based on the spread of coordinates
+
     final latSpread = maxLat - minLat;
     final lngSpread = maxLng - minLng;
     final maxSpread = max(latSpread, lngSpread);
-    
-    // Adjust zoom level based on coordinate spread
-    double zoomLevel = 8.0; // Default zoom
+
+    double zoomLevel = 8.0;
     if (maxSpread > 10) {
-      zoomLevel = 4.0; // Very wide spread
+      zoomLevel = 4.0;
     } else if (maxSpread > 5) {
-      zoomLevel = 5.0; // Wide spread
+      zoomLevel = 5.0;
     } else if (maxSpread > 2) {
-      zoomLevel = 6.0; // Medium spread
+      zoomLevel = 6.0;
     } else if (maxSpread > 1) {
-      zoomLevel = 7.0; // Small spread
+      zoomLevel = 7.0;
     }
-    
-    // Ensure we start with a wide view to see all markers
     zoomLevel = min(zoomLevel, 5.0);
-    
+
     final initialCameraPosition = CameraPosition(
       target: LatLng(centerLat, centerLng),
       zoom: zoomLevel,
     );
-    
-    // Debug: Print map center and zoom info
-    print('Map center: ($centerLat, $centerLng), zoom: $zoomLevel, spread: $maxSpread');
-    print('Valid campsites: ${validCampsites.length}/${campsites.length}');
 
     final markers = validCampsites.map((campsite) {
       final fixedLocation = fixCoordinates(campsite.geoLocation.latitude, campsite.geoLocation.longitude);
-      
-      // Debug: Print original and fixed coordinates
-      print('Campsite ${campsite.id}: Original(${campsite.geoLocation.latitude}, ${campsite.geoLocation.longitude}) -> Fixed(${fixedLocation.latitude}, ${fixedLocation.longitude})');
-      
       return Marker(
         markerId: MarkerId(campsite.id),
         position: fixedLocation,
