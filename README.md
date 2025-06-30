@@ -124,13 +124,3 @@ Run the test suite:
 ```bash
 flutter test
 ```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-Fahad Khalid - [@FahadKhalid](https://github.com/FahadKhalid)
-
-Project Link: [https://github.com/FahadKhalid/RoadSurfer](https://github.com/FahadKhalid/RoadSurfer)
