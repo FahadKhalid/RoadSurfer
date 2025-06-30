@@ -111,40 +111,6 @@ lib/
    flutter run
    ```
 
-## 🚀 GitHub Pages Deployment
-
-This app is automatically deployed to GitHub Pages using GitHub Actions. The deployment process:
-
-### Automatic Deployment
-- Every push to the `main` branch triggers automatic deployment
-- The web app is built and deployed to `https://fahadkhalid.github.io/RoadSurfer/`
-- No manual intervention required
-
-### Manual Deployment
-If you need to deploy manually:
-
-1. **Build the web app**
-   ```bash
-   flutter build web --release
-   ```
-
-2. **Run the deployment script**
-   ```bash
-   ./deploy.sh
-   ```
-
-3. **Configure GitHub Pages**
-   - Go to your repository settings
-   - Navigate to "Pages" section
-   - Set source to "Deploy from a branch"
-   - Select "gh-pages" branch and "/ (root)" folder
-   - Save settings
-
-### Deployment Files
-- `.github/workflows/deploy.yml` - GitHub Actions workflow
-- `deploy.sh` - Manual deployment script
-- `build/web/` - Generated web files
-
 ## API Integration
 
 The app integrates with a mock API for campsite data:
@@ -159,30 +125,9 @@ Run the test suite:
 flutter test
 ```
 
-The project includes comprehensive unit tests for:
-- Data models
-- Data sources
-- Use cases
-- Widgets
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Flutter team for the amazing framework
-- Riverpod for excellent state management
-- Google Maps for map integration
-- MockAPI for providing test data
 
 ## Contact
 
