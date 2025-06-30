@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:go_router/go_router.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/utils/price_formatter.dart';
 import '../../domain/entities/campsite.dart';
 import 'feature_chip.dart';
