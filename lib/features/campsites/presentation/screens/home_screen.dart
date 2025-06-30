@@ -67,17 +67,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         .read(campsitesNotifierProvider.notifier)
                         .refreshCampsites();
                   },
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: campsites.length,
-                    itemBuilder: (context, index) {
-                      final campsite = campsites[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: CampsiteCard(
-                          campsite: campsite,
-                          onTap: () => context.push('${AppStrings.campsiteDetailRoute.replaceAll(':id', campsite.id)}'),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      int crossAxisCount = 1;
+                      double width = constraints.maxWidth;
+                      if (width >= 1200) {
+                        crossAxisCount = 4;
+                      } else if (width >= 800) {
+                        crossAxisCount = 2;
+                      }
+                      return GridView.builder(
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: crossAxisCount,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                          childAspectRatio: 1.2,
                         ),
+                        itemCount: campsites.length,
+                        itemBuilder: (context, index) {
+                          final campsite = campsites[index];
+                          return CampsiteCard(
+                            campsite: campsite,
+                            onTap: () => context.push('${AppStrings.campsiteDetailRoute.replaceAll(':id', campsite.id)}'),
+                          );
+                        },
                       );
                     },
                   ),
