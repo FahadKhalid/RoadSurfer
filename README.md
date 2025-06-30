@@ -39,55 +39,26 @@ A Flutter application for discovering and exploring campsites across Europe. Bui
 lib/
 ├── core/
 │   ├── constants/
-│   │   └── api_constants.dart
+│   ├── errors/
 │   ├── router/
-│   │   └── app_router.dart
 │   └── utils/
-│       └── price_formatter.dart
 ├── features/
 │   └── campsites/
 │       ├── data/
 │       │   ├── datasources/
-│       │   │   └── campsite_remote_data_source.dart
 │       │   ├── models/
-│       │   │   ├── campsite_model.dart
-│       │   │   ├── campsite_model.freezed.dart
-│       │   │   └── campsite_model.g.dart
 │       │   └── repositories/
-│       │       ├── campsite_repository_impl.dart
-│       │       └── campsite_repository_impl.g.dart
 │       ├── domain/
 │       │   ├── entities/
-│       │   │   ├── campsite.dart
-│       │   │   ├── campsite.freezed.dart
-│       │   │   ├── campsite.g.dart
-│       │   │   ├── filter_criteria.dart
-│       │   │   └── filter_criteria.freezed.dart
 │       │   ├── repositories/
-│       │   │   └── campsite_repository.dart
 │       │   └── usecases/
-│       │       ├── get_campsite_by_id_usecase.dart
-│       │       ├── get_campsite_by_id_usecase.g.dart
-│       │       ├── get_campsites_usecase.dart
-│       │       └── get_campsites_usecase.g.dart
 │       └── presentation/
 │           ├── providers/
-│           │   ├── campsites_provider.dart
-│           │   └── campsites_provider.g.dart
 │           ├── screens/
-│           │   ├── campsite_detail_screen.dart
-│           │   ├── home_screen.dart
-│           │   └── map_screen.dart
 │           ├── viewmodels/
-│           │   └── campsites_viewmodel.dart
 │           └── widgets/
-│               ├── campsite_card.dart
-│               ├── feature_chip.dart
-│               ├── filter_bottom_sheet.dart
-│               └── search_bar_widget.dart
 ├── shared/
 │   ├── theme/
-│   │   └── app_theme.dart
 │   └── widgets/
 └── main.dart
 ```
@@ -181,23 +152,6 @@ The app integrates with a mock API for campsite data:
 - **Features**: Automatic coordinate transformation for accurate map positioning
 - **Error Handling**: Robust error handling with fallback values
 
-### Coordinate Transformation
-
-The app includes intelligent coordinate transformation to handle API data with scaled coordinates:
-```dart
-LatLng fixCoordinates(double rawLat, double rawLong) {
-  // If values are absurdly large (like 32680.68), scale them down
-  final lat = (rawLat.abs() > 90) ? rawLat / 1000 : rawLat;
-  final long = (rawLong.abs() > 180) ? rawLong / 1000 : rawLong;
-  
-  // Clamp to valid ranges
-  return LatLng(
-    lat.clamp(-90, 90),
-    long.clamp(-180, 180),
-  );
-}
-```
-
 ## Testing
 
 Run the test suite:
@@ -210,22 +164,6 @@ The project includes comprehensive unit tests for:
 - Data sources
 - Use cases
 - Widgets
-
-## Dependencies
-
-### Core Dependencies
-- `flutter_riverpod`: State management
-- `go_router`: Navigation
-- `google_maps_flutter`: Map integration
-- `freezed`: Immutable data classes
-- `json_annotation`: JSON serialization
-
-### Development Dependencies
-- `build_runner`: Code generation
-- `freezed`: Code generation for immutable classes
-- `json_serializable`: JSON serialization code generation
-- `riverpod_generator`: Riverpod code generation
-- `mockito`: Mocking for tests
 
 ## Contributing
 
